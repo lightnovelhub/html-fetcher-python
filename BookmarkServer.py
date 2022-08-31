@@ -37,7 +37,9 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             query_components = dict(qc.split("=") for qc in query.split("&"))
             searchQuery = query_components["query"]
             typeQuery = query_components["type"]
-            browser.get("https://open.spotify.com/search/" + searchQuery +"/"+ typeQuery)
+            myquery = "https://open.spotify.com/search/" + searchQuery + "/"+ typeQuery
+            print(myquery)
+            browser.get(myquery)
             myElem = WebDriverWait(browser, delay).until(
                 EC.presence_of_element_located((By.CLASS_NAME, 'onVWL7MW4PW9FyVajBAc')))
             self.wfile.write(bytes(browser.page_source, "utf-8"))
