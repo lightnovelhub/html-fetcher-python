@@ -1,1 +1,2 @@
+requests>=2.12
 selenium==4.4.3
