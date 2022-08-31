@@ -7,8 +7,7 @@ from selenium.common.exceptions import TimeoutException
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse
 import os
-hostName = "localhost"
-serverPort = os.environ['PORT']
+serverPort = int(os.environ['PORT'])
 chrome_options = Options()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
@@ -41,8 +40,8 @@ class MyServer(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    webServer = HTTPServer((hostName, serverPort), MyServer)
-    print("Server started http://%s:%s" % (hostName, serverPort))
+    webServer = HTTPServer(('', serverPort), MyServer)
+    print("Server started http://%s:%s" % ('', serverPort))
 
     try:
         webServer.serve_forever()
