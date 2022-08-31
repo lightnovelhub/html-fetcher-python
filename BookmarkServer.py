@@ -41,7 +41,7 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             print(myquery)
             browser.get(myquery)
             myElem = WebDriverWait(browser, delay).until(
-                EC.presence_of_element_located((By.CLASS_NAME, 'ShMHCGsT93epRGdxJp2w')))
+                EC.presence_of_element_located((By.CLASS_NAME, 'wTUruPetkKdWAR1dd6w4')))
             self.wfile.write(bytes(browser.page_source, "utf-8"))
         except TimeoutException:
             self.send_response(200)
