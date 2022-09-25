@@ -36,13 +36,20 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             query = urlparse(self.path).query
             query_components = dict(qc.split("=") for qc in query.split("&"))
             searchQuery = query_components["query"]
-            typeQuery = query_components["type"]
-            myquery = "https://open.spotify.com/search/" + searchQuery + "/"+ typeQuery
-            print(myquery)
+            myquery = "https://www.y2mate.com/youtube-mp3/" + searchQuery
             browser.get(myquery)
-            myElem = WebDriverWait(browser, delay).until(
-                EC.presence_of_element_located((By.CLASS_NAME, 'wTUruPetkKdWAR1dd6w4')))
-            self.wfile.write(bytes(browser.page_source, "utf-8"))
+            WebDriverWait(browser, delay).until(
+                EC.presence_of_element_located((By.CLASS_NAME, 'caption')))
+            l = browser.find_element(
+                By.CSS_SELECTOR, "#result > div > div.col-xs-12.col-sm-7.col-md-8 > div > div > div.btn-group.inline.p-r-md > button.btn.btn-default.dropdown-toggle")
+            l.click()
+            browser.find_element(By.CSS_SELECTOR, "#result > div > div.col-xs-12.col-sm-7.col-md-8 > div > div > div.btn-group.inline.p-r-md.open > div > div.panel-body.panel_file_type > div.col-xs-5.p-t-md > ul > li:nth-child(1) > a").click()
+            browser.find_element(By.CSS_SELECTOR, "#process_mp3").click()
+            WebDriverWait(browser, delay).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, '#process-result > div')))
+            url = browser.find_element(
+                By.CSS_SELECTOR, "#process-result > div > a").get_attribute("href")
+            self.wfile.write(bytes(url, "utf-8"))
         except TimeoutException:
             self.send_response(200)
             self.send_header("Content-type", "application/json")
