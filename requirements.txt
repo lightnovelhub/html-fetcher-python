@@ -1,2 +1,3 @@
 requests>=2.12
 selenium==4.4.3
+youtube-dl==2021.12.17
